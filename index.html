@@ -1,0 +1,618 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>我叫李文 · Ôn tập Bài 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: một "sổ hộ chiếu" ôn tập — 6 trạm, mỗi trạm hoàn thành được đóng một con dấu đỏ */
+:root{
+  --paper:#F4F6F3; --card:#FFFFFF; --ink:#1D2824; --muted:#5E6B66; --line:#D5DDD9;
+  --seal:#C8321E; --seal-soft:#F7E1DC; --jade:#2C7A67; --jade-soft:#DDEFEA; --gold:#C98A1B;
+  --grid:#E3B7AE;
+  --f-display:"Ma Shan Zheng","Noto Serif SC","STKaiti",serif;
+  --f-han:"Noto Serif SC","Songti SC","SimSun",serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#121816; --card:#1B2320; --ink:#E7EEEA; --muted:#9AA8A2; --line:#2E3A36;
+  --seal:#EF6450; --seal-soft:#3A1F1A; --jade:#5CC2A7; --jade-soft:#17322B; --gold:#E8B04A; --grid:#5A3530; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121816; --card:#1B2320; --ink:#E7EEEA; --muted:#9AA8A2; --line:#2E3A36;
+  --seal:#EF6450; --seal-soft:#3A1F1A; --jade:#5CC2A7; --jade-soft:#17322B; --gold:#E8B04A; --grid:#5A3530; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.han{font-family:var(--f-han)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--jade);outline-offset:2px}
+
+/* Hero */
+.hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px 28px;margin-bottom:22px}
+.tzg{display:flex;gap:6px}
+.tzg span{width:clamp(56px,15vw,84px);aspect-ratio:1;max-width:100%;display:grid;place-items:center;font-family:var(--f-display);font-size:clamp(40px,11vw,62px);color:var(--seal);
+  border:2px solid var(--seal);position:relative;background:var(--card);
+  background-image:linear-gradient(var(--grid),var(--grid)),linear-gradient(var(--grid),var(--grid));
+  background-size:100% 1px,1px 100%;background-position:center;background-repeat:no-repeat}
+.hero-txt{min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.hero h1{margin:2px 0 4px;font-size:clamp(22px,4vw,28px);line-height:1.2;text-wrap:balance}
+.hero p{margin:0;color:var(--muted);max-width:52ch}
+
+/* Seal passport */
+.passport{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 16px;border:1.5px dashed var(--line);border-radius:6px;margin-bottom:18px}
+.passport b{font-size:14px;margin-right:4px}
+.seal{width:46px;height:46px;border:2px solid var(--line);border-radius:6px;display:grid;place-items:center;font-family:var(--f-display);font-size:24px;color:var(--line);transition:transform .3s}
+.seal.on{border-color:var(--seal);background:var(--seal);color:#fff;transform:rotate(-8deg)}
+.seal.on.pop{animation:stamp .45s ease-out}
+@keyframes stamp{0%{transform:scale(1.8) rotate(-8deg);opacity:.2}70%{transform:scale(.9) rotate(-8deg)}100%{transform:scale(1) rotate(-8deg)}}
+.passport .count{margin-left:auto;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center}
+.tab .han{font-size:16px}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px clamp(16px,3vw,28px)}
+.panel h2{margin:0 0 4px;font-size:20px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.panel h2 .han{color:var(--seal)}
+.hint{color:var(--muted);margin:0 0 18px;font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--ink);background:transparent;border-radius:8px;padding:9px 16px;font-weight:600;font-size:15px}
+.btn.primary{background:var(--seal);border-color:var(--seal);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+.prog{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* 1. Flashcards */
+.fc{perspective:1000px;width:100%;max-width:380px;margin:0 auto 16px;aspect-ratio:4/3}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;border:2px solid var(--seal);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--card);padding:16px;text-align:center}
+.fc-face .big{font-family:var(--f-han);font-size:clamp(52px,14vw,76px);line-height:1.1}
+.fc-back{transform:rotateY(180deg);background:var(--seal-soft)}
+.fc-back .py{font-size:26px;color:var(--seal);font-weight:600}
+.fc-back .vi{font-size:20px;font-weight:600}
+.fc-back .pos{font-size:13px;color:var(--muted)}
+.fc-num{position:absolute;top:10px;left:14px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fc-tip{font-size:13px;color:var(--muted)}
+.dots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:12px 0 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots i.seen{background:var(--jade)}
+.dots i.cur{outline:2px solid var(--seal);outline-offset:1px}
+
+/* 2. Memory (nâng cấp) */
+.cfg{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:14px}
+.cfg-g{display:flex;flex-direction:column;gap:4px;min-width:0}
+.cfg-g>span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:flex;flex-wrap:wrap;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:none;background:transparent;padding:6px 11px;font-size:14px;font-weight:600}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.membar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:4px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.chip.combo{background:var(--gold);color:#fff;border-color:var(--gold);transform-origin:center}
+.chip.combo.bump{animation:bump .4s}
+@keyframes bump{50%{transform:scale(1.35)}}
+.teams{display:flex;gap:10px;margin-bottom:12px}
+.team{flex:1;border:2px solid var(--line);border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-weight:700;transition:.2s}
+.team .sc{font-size:24px;font-variant-numeric:tabular-nums}
+.team.red.turn{border-color:var(--seal);background:var(--seal-soft);color:var(--seal)}
+.team.blue.turn{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.team.turn::after{content:"▶ đến lượt";font-size:12px;font-weight:600;order:-1}
+.mem{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:8px;perspective:900px}
+@media (max-width:520px){.mem{--cols:4!important}}
+.mc{aspect-ratio:3/4;border:none;padding:0;background:none;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+.mc .f,.mc .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:9px;display:grid;place-items:center;padding:6px;text-align:center}
+.mc .b{background:var(--seal);color:rgba(255,255,255,.9);font-family:var(--f-display);font-size:clamp(24px,6vw,34px);
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 6px,transparent 6px 12px);box-shadow:inset 0 0 0 3px var(--seal),inset 0 0 0 5px rgba(255,255,255,.5)}
+.mc .f{transform:rotateY(180deg);background:var(--card);border:2px solid var(--seal);font-weight:600;font-size:clamp(12px,3.2vw,15px);line-height:1.25;color:var(--ink)}
+.mc .f .han{font-size:clamp(22px,6vw,32px);font-weight:500}
+.mc .f .pyc{font-size:clamp(15px,4vw,19px);color:var(--seal)}
+.mc.open,.mc.done{transform:rotateY(180deg)}
+.mc.done .f{border-color:var(--jade);background:var(--jade-soft);animation:glow .6s}
+.mc.done.t-red .f{border-color:var(--seal);background:var(--seal-soft)}
+.mc.miss .f{animation:shake .35s;border-color:var(--muted)}
+.mc:hover:not(.open):not(.done){transform:translateY(-3px)}
+@keyframes glow{50%{transform:scale(1.08)}}
+.memEnd{text-align:center;padding:18px 0 4px}
+.stars{font-size:40px;letter-spacing:6px;color:var(--gold)}
+.stars .off{color:var(--line)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;height:100%}
+
+/* Bonus: whack-a-word */
+.wk-prompt{text-align:center;margin:4px 0 14px;min-height:72px}
+.wk-prompt .ask{font-size:14px;color:var(--muted)}
+.wk-prompt .tgt{font-size:clamp(24px,7vw,32px);font-weight:700}
+.field{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,3vw,18px);max-width:460px;margin:0 auto;padding:16px;border-radius:14px;background:var(--jade-soft)}
+.hole{aspect-ratio:1;position:relative;overflow:hidden;border-radius:50% 50% 12px 12px}
+.hole::after{content:"";position:absolute;left:6%;right:6%;bottom:4%;height:28%;border-radius:50%;background:var(--ink);opacity:.85;z-index:2}
+.mole{position:absolute;left:12%;right:12%;bottom:-80%;height:78%;border:none;border-radius:50% 50% 40% 40%;background:var(--seal);color:#fff;font-family:var(--f-han);font-size:clamp(22px,7vw,36px);
+  display:grid;place-items:center;z-index:1;transition:bottom .18s ease-out;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18)}
+.mole::before{content:"";position:absolute;top:-8px;left:50%;width:4px;height:12px;background:var(--gold);transform:translateX(-50%);border-radius:2px}
+.mole.up{bottom:14%}
+.mole.hit{background:var(--jade);animation:bonk .3s}
+.mole.bad{background:var(--muted);animation:shake .3s}
+@keyframes bonk{50%{transform:scale(.8,1.1)}}
+
+/* 3. Dialogue */
+.dlg{display:flex;flex-direction:column;gap:14px}
+.line{display:flex;gap:10px;align-items:flex-start}
+.who{flex:0 0 auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-han);font-size:15px;background:var(--jade-soft);color:var(--jade);font-weight:700}
+.bub{min-width:0;flex:1;border:1.5px solid var(--line);border-radius:4px 12px 12px 12px;padding:10px 14px}
+.bub .say{font-family:var(--f-han);font-size:22px;line-height:1.6}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--seal);text-align:center;color:var(--seal);margin:0 3px}
+.blank.ok{color:var(--jade);border-color:var(--jade)}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.opt{border:1.5px solid var(--line);background:var(--paper);border-radius:6px;padding:4px 12px;font-family:var(--f-han);font-size:18px}
+.opt.wrong{border-color:var(--seal);background:var(--seal-soft);text-decoration:line-through;opacity:.6}
+.opt.right{border-color:var(--jade);background:var(--jade-soft)}
+
+/* 4. Word order */
+.slot{min-height:64px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.slot.ok{border-style:solid;border-color:var(--jade);background:var(--jade-soft)}
+.slot.bad{border-color:var(--seal);animation:shake .35s}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;min-height:52px}
+.tile{font-family:var(--f-han);font-size:22px;border:2px solid var(--ink);background:var(--card);border-radius:6px;padding:4px 12px;box-shadow:0 3px 0 var(--ink)}
+.tile:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.vi-hint{font-size:17px;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px;font-size:13px}
+.legend span{padding:2px 10px;border-radius:999px;font-weight:600}
+.lg-s{background:var(--jade-soft);color:var(--jade)}
+.lg-p{background:var(--seal-soft);color:var(--seal)}
+.lg-o{background:var(--paper);border:1px solid var(--line)}
+
+/* 5. Names */
+.names{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.nm{border:1.5px solid var(--line);border-radius:10px;padding:14px;text-align:center}
+.nm .chars{display:flex;justify-content:center;gap:4px;margin:6px 0}
+.ch{width:52px;height:52px;border:1.5px solid var(--grid);background:var(--paper);font-family:var(--f-han);font-size:30px;border-radius:4px;display:grid;place-items:center;
+  background-image:linear-gradient(var(--grid),var(--grid)),linear-gradient(var(--grid),var(--grid));background-size:100% 1px,1px 100%;background-position:center;background-repeat:no-repeat}
+.ch.xing{background-color:var(--seal);color:#fff;border-color:var(--seal);background-image:none}
+.ch.ming{background-color:var(--jade-soft);color:var(--jade);border-color:var(--jade);background-image:none}
+.ch.miss{animation:shake .35s;border-color:var(--seal)}
+.nm .py{font-size:14px;color:var(--muted)}
+.nm .res{font-size:14px;min-height:1.5em;font-weight:600}
+.rule{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px;font-size:15px}
+.rule .pill{padding:3px 12px;border-radius:999px;font-weight:700}
+
+/* 6. Lightning */
+.lt-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.timer{height:8px;background:var(--line);border-radius:4px;overflow:hidden;flex:1;min-width:120px}
+.timer i{display:block;height:100%;background:var(--gold);width:100%;transition:width 1s linear}
+.stat{font-variant-numeric:tabular-nums;font-weight:700}
+.q{text-align:center;margin:10px 0 18px}
+.q .ask{font-size:14px;color:var(--muted)}
+.q .big{font-size:clamp(40px,11vw,56px);font-family:var(--f-han);line-height:1.2}
+.q .big.vi{font-family:var(--f-body);font-size:clamp(26px,7vw,34px);font-weight:700}
+.ans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ans button{border:2px solid var(--line);background:var(--paper);border-radius:10px;padding:14px 8px;font-size:20px;font-weight:600}
+.ans button.han{font-size:26px}
+.ans button.right{border-color:var(--jade);background:var(--jade-soft)}
+.ans button.wrong{border-color:var(--seal);background:var(--seal-soft)}
+.center{text-align:center}
+
+/* Tongue twister */
+.twister{margin-top:28px;border-top:1.5px dashed var(--line);padding-top:20px}
+.twister h3{margin:0 0 8px;font-size:16px}
+.tw{display:flex;flex-wrap:wrap;gap:2px 4px}
+.tw ruby{font-family:var(--f-han);font-size:26px;ruby-position:over}
+.tw rt{font-family:var(--f-body);font-size:12px;color:var(--seal)}
+.tw ruby.hl{color:var(--seal)}
+.tw-vi{color:var(--muted);font-size:15px;margin:8px 0 12px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:600;opacity:0;transition:.3s;pointer-events:none;z-index:20;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.speak{border:none;background:var(--jade-soft);color:var(--jade);border-radius:999px;padding:5px 12px;font-weight:600;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="tzg" aria-label="我叫李文"><span>我</span><span>叫</span><span>李</span><span>文</span></div>
+    <div class="hero-txt">
+      <div class="eyebrow">HSK 1 · Lesson 2 · Wǒ jiào Lǐ Wén</div>
+      <h1>Sổ ôn tập: Tôi tên là Lý Văn</h1>
+      <p>Đi qua 6 trạm, mỗi trạm hoàn thành được đóng một con dấu đỏ. Gom đủ 6 dấu là xong bài!</p>
+    </div>
+  </header>
+
+  <div class="passport" aria-label="Con dấu đã nhận">
+    <b>Con dấu:</b>
+    <div class="seal" data-seal="0" title="Thẻ từ">字</div>
+    <div class="seal" data-seal="1" title="Lật cặp">配</div>
+    <div class="seal" data-seal="2" title="Hội thoại">话</div>
+    <div class="seal" data-seal="3" title="Xếp câu">序</div>
+    <div class="seal" data-seal="4" title="Họ tên">姓</div>
+    <div class="seal" data-seal="5" title="Tốc độ">快</div>
+    <span class="count" id="sealCount">0 / 6</span>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-t="0"><span class="han">字卡</span> Thẻ từ</button>
+    <button class="tab" role="tab" data-t="1"><span class="han">配对</span> Lật cặp</button>
+    <button class="tab" role="tab" data-t="2"><span class="han">对话</span> Hội thoại</button>
+    <button class="tab" role="tab" data-t="3"><span class="han">语序</span> Xếp câu</button>
+    <button class="tab" role="tab" data-t="4"><span class="han">姓名</span> Họ tên</button>
+    <button class="tab" role="tab" data-t="5"><span class="han">闪电</span> 60 giây</button>
+    <button class="tab" role="tab" data-t="6"><span class="han">打字</span> Đập chữ ★</button>
+  </nav>
+
+  <!-- 1 Flashcards -->
+  <section class="panel" data-p="0">
+    <h2><span class="han">字卡</span> Trạm 1 · Thẻ từ vựng</h2>
+    <p class="hint">Nhìn chữ Hán, đoán pinyin và nghĩa, rồi chạm vào thẻ để lật. Xem hết 15 từ để nhận dấu <b class="han">字</b>.</p>
+    <div class="fc" id="fc" tabindex="0" role="button" aria-label="Lật thẻ">
+      <div class="fc-in">
+        <div class="fc-face"><span class="fc-num" id="fcNum"></span><div class="big" id="fcHan"></div><div class="fc-tip">Chạm để lật</div></div>
+        <div class="fc-face fc-back"><div class="big" id="fcHan2" style="font-size:40px"></div><div class="py" id="fcPy"></div><div class="vi" id="fcVi"></div><div class="pos" id="fcPos"></div></div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:center">
+      <button class="btn" id="fcPrev">← Trước</button>
+      <button class="speak" id="fcSay">🔊 Nghe</button>
+      <button class="btn" id="fcShuf">Trộn thẻ</button>
+      <button class="btn primary" id="fcNext">Tiếp →</button>
+    </div>
+    <div class="dots" id="fcDots"></div>
+  </section>
+
+  <!-- 2 Memory -->
+  <section class="panel" data-p="1" hidden>
+    <h2><span class="han">配对</span> Trạm 2 · Lật cặp siêu tốc</h2>
+    <p class="hint">Lật 2 thẻ, trùng cặp thì giữ lại. Ghép liên tiếp để nhận <b>combo</b>. Chơi 2 đội thì ai ghép đúng được lật tiếp. Hoàn thành 1 ván bất kỳ để nhận dấu.</p>
+    <div class="cfg">
+      <div class="cfg-g"><span>Kiểu ghép</span><div class="seg" id="cfgMode">
+        <button data-v="v" aria-pressed="true">Chữ ↔ Nghĩa</button><button data-v="p" aria-pressed="false">Chữ ↔ Pinyin</button><button data-v="h" aria-pressed="false">Chữ ↔ Chữ</button></div></div>
+      <div class="cfg-g"><span>Độ khó</span><div class="seg" id="cfgSize">
+        <button data-v="6" aria-pressed="true">Dễ · 6</button><button data-v="8" aria-pressed="false">Vừa · 8</button><button data-v="10" aria-pressed="false">Khó · 10</button></div></div>
+      <div class="cfg-g"><span>Người chơi</span><div class="seg" id="cfgPlay">
+        <button data-v="1" aria-pressed="true">1 người</button><button data-v="2" aria-pressed="false">2 đội</button></div></div>
+    </div>
+    <div class="teams" id="teams" hidden>
+      <div class="team red" id="tRed"><span>Đội Đỏ 红</span><span class="sc" id="sRed">0</span></div>
+      <div class="team blue" id="tBlue"><span>Đội Xanh 绿</span><span class="sc" id="sBlue">0</span></div>
+    </div>
+    <div class="membar">
+      <div class="chips">
+        <span class="chip">⏱ <span id="memTime">0</span>s</span>
+        <span class="chip">Lượt <span id="memFlips">0</span></span>
+        <span class="chip">Cặp <span id="memPairs">0/6</span></span>
+        <span class="chip combo" id="memCombo" hidden>Combo ×<span id="memComboN">2</span></span>
+      </div>
+      <div class="row">
+        <button class="speak" id="memPeek">👀 Nhìn trộm (1 lần)</button>
+        <button class="speak" id="memSnd">🔔 Âm thanh: bật</button>
+        <button class="btn" id="memNew">Ván mới</button>
+      </div>
+    </div>
+    <div class="mem" id="mem"></div>
+    <div class="memEnd" id="memEnd" hidden></div>
+  </section>
+
+  <!-- Bonus: Whack -->
+  <section class="panel" data-p="6" hidden>
+    <h2><span class="han">打字</span> Thưởng · Đập chữ</h2>
+    <p class="hint">Đọc nghĩa (hoặc nghe), rồi đập thật nhanh vào chữ Hán đúng khi nó trồi lên. Đập đúng +1, đập sai −1. Càng về sau chữ càng nhanh!</p>
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <div class="chips"><span class="chip">⏱ <span id="wkTime">45</span>s</span><span class="chip">⭐ <span id="wkScore">0</span></span><span class="chip">Kỷ lục <span id="wkBest">0</span></span></div>
+      <div class="row"><div class="seg" id="wkMode"><button data-v="read" aria-pressed="true">Đọc nghĩa</button><button data-v="listen" aria-pressed="false">Nghe</button></div>
+      <button class="btn primary" id="wkStart">Bắt đầu</button></div>
+    </div>
+    <div class="wk-prompt"><div class="ask" id="wkAsk">Nhấn “Bắt đầu” để chơi</div><div class="tgt" id="wkTgt">打地鼠</div></div>
+    <div class="field" id="field"></div>
+  </section>
+
+  <!-- 3 Dialogue -->
+  <section class="panel" data-p="2" hidden>
+    <h2><span class="han">对话</span> Trạm 3 · Điền vào hội thoại</h2>
+    <p class="hint">Chọn từ đúng cho mỗi chỗ trống trong 3 bài khóa. Đúng hết 8 câu để nhận dấu.</p>
+    <div class="dlg" id="dlg"></div>
+    <div class="row" style="margin-top:16px;justify-content:space-between">
+      <span class="prog" id="dlgStat"></span>
+      <button class="btn" id="dlgReset">Làm lại</button>
+    </div>
+  </section>
+
+  <!-- 4 Word order -->
+  <section class="panel" data-p="3" hidden>
+    <h2><span class="han">语序</span> Trạm 4 · Xếp câu đúng trật tự</h2>
+    <p class="hint">Trật tự cơ bản của câu tiếng Trung giống tiếng Việt:</p>
+    <div class="legend"><span class="lg-s">Chủ ngữ 我</span><span class="lg-p">Vị ngữ 叫</span><span class="lg-o">Tân ngữ 陈天中</span></div>
+    <div class="row" style="justify-content:space-between"><span class="prog" id="ordStat"></span><button class="speak" id="ordSay" hidden>🔊 Nghe câu</button></div>
+    <p class="vi-hint" id="ordVi" style="margin:6px 0 0"></p>
+    <div class="slot" id="ordSlot" aria-label="Câu của bạn"></div>
+    <div class="tiles" id="ordTiles"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="ordClear">Xóa</button>
+      <button class="btn primary" id="ordCheck">Kiểm tra</button>
+      <button class="btn" id="ordNext" hidden>Câu tiếp →</button>
+    </div>
+  </section>
+
+  <!-- 5 Names -->
+  <section class="panel" data-p="4" hidden>
+    <h2><span class="han">姓名</span> Trạm 5 · Họ và tên người Trung Quốc</h2>
+    <div class="rule"><span>Tên người Trung Quốc:</span><span class="pill" style="background:var(--seal);color:#fff">姓 họ</span><b>+</b><span class="pill" style="background:var(--jade-soft);color:var(--jade)">名 tên</span><span>— họ đứng trước, giống tiếng Việt.</span></div>
+    <p class="hint">Chạm vào chữ là <b>họ</b> trong mỗi tên. Tìm đúng cả 4 người để nhận dấu.</p>
+    <div class="names" id="names"></div>
+  </section>
+
+  <!-- 6 Lightning -->
+  <section class="panel" data-p="5" hidden>
+    <h2><span class="han">闪电</span> Trạm 6 · Thử thách 60 giây</h2>
+    <p class="hint">Trả lời càng nhanh càng tốt. Đạt 10 điểm trở lên để nhận dấu cuối cùng!</p>
+    <div id="ltIntro" class="center">
+      <p style="font-size:18px">Kỷ lục của bạn: <b class="stat" id="ltBest">0</b> điểm</p>
+      <button class="btn primary" id="ltStart" style="font-size:18px;padding:12px 28px">Bắt đầu 开始!</button>
+    </div>
+    <div id="ltGame" hidden>
+      <div class="lt-top">
+        <span class="stat">⏱ <span id="ltTime">60</span>s</span>
+        <div class="timer"><i id="ltBar"></i></div>
+        <span class="stat">⭐ <span id="ltScore">0</span></span>
+      </div>
+      <div class="q"><div class="ask" id="ltAsk"></div><div class="big" id="ltQ"></div></div>
+      <div class="ans" id="ltAns"></div>
+    </div>
+    <div id="ltEnd" class="center" hidden>
+      <p style="font-size:22px;font-weight:700;margin:0" id="ltMsg"></p>
+      <p class="hint" id="ltMsg2" style="margin:6px 0 14px"></p>
+      <button class="btn primary" id="ltAgain">Chơi lại</button>
+    </div>
+  </section>
+
+  <section class="twister">
+    <h3>Góc thư giãn: đọc theo câu nói nhịu 跟读绕口令</h3>
+    <div class="tw" id="tw"></div>
+    <p class="tw-vi">Bảy cộng một, lại trừ một, cộng xong trừ xong bằng mấy? Cộng xong trừ xong vẫn là bảy.</p>
+    <div class="row"><button class="speak" id="twSay">🔊 Nghe chậm</button><button class="speak" id="twFast">🔊 Nghe nhanh</button></div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+const W=[
+ {h:"请问",p:"qǐngwèn",v:"xin hỏi",t:"động từ"},
+ {h:"你",p:"nǐ",v:"bạn, anh, chị",t:"đại từ"},
+ {h:"叫",p:"jiào",v:"gọi là, tên là",t:"động từ"},
+ {h:"什么",p:"shénme",v:"cái gì",t:"đại từ"},
+ {h:"名字",p:"míngzi",v:"tên",t:"danh từ"},
+ {h:"我",p:"wǒ",v:"tôi",t:"đại từ"},
+ {h:"不",p:"bù",v:"không",t:"phó từ"},
+ {h:"是",p:"shì",v:"là",t:"động từ"},
+ {h:"对不起",p:"duìbuqǐ",v:"xin lỗi",t:"động từ"},
+ {h:"没关系",p:"méi guānxi",v:"không sao",t:"cụm từ"},
+ {h:"没事",p:"méishì",v:"không có gì",t:"động từ"},
+ {h:"很",p:"hěn",v:"rất",t:"phó từ"},
+ {h:"高兴",p:"gāoxìng",v:"vui, vui mừng",t:"tính từ"},
+ {h:"认识",p:"rènshi",v:"quen biết",t:"động từ"},
+ {h:"也",p:"yě",v:"cũng",t:"phó từ"}
+];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(k,d){try{const v=localStorage.getItem("hsk1l2-"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("hsk1l2-"+k,JSON.stringify(v))}catch(e){}}};
+
+/* speech */
+let zhVoice=null;
+function loadVoices(){try{const vs=speechSynthesis.getVoices();zhVoice=vs.find(v=>/zh[-_]CN/i.test(v.lang))||vs.find(v=>/^zh/i.test(v.lang))||null}catch(e){}}
+const canSpeak="speechSynthesis" in window;
+if(canSpeak){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}else{$$(".speak").forEach(b=>b.hidden=true)}
+function say(t,rate=.8){if(!canSpeak)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="zh-CN";u.rate=rate;if(zhVoice)u.voice=zhVoice;speechSynthesis.speak(u)}catch(e){}}
+
+/* toast + seals */
+let tT;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>t.classList.remove("show"),2200)}
+let seals=store.get("seals",[0,0,0,0,0,0]);
+function drawSeals(pop){$$(".seal").forEach((s,i)=>{s.classList.toggle("on",!!seals[i]);if(i===pop){s.classList.remove("pop");void s.offsetWidth;s.classList.add("pop")}});
+ const n=seals.filter(Boolean).length;$("#sealCount").textContent=n+" / 6"+(n===6?" · 太棒了！Xuất sắc!":"")}
+function award(i,name){if(seals[i])return;seals[i]=1;store.set("seals",seals);drawSeals(i);
+ const n=seals.filter(Boolean).length;toast(n===6?"🎉 Đủ 6 dấu! 你真棒！":"Nhận dấu “"+name+"”! 很好！")}
+drawSeals();
+
+/* tabs */
+function showTab(i){if(i!==6&&window.__wkStop)window.__wkStop();$$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.t==i));$$(".panel").forEach(p=>p.hidden=p.dataset.p!=i);store.set("tab",i)}
+$$(".tab").forEach(t=>t.onclick=()=>showTab(+t.dataset.t));
+showTab(store.get("tab",0));
+
+/* 1 flashcards */
+let fcOrder=W.map((_,i)=>i),fcI=0,fcSeen=new Set();
+const dots=$("#fcDots");
+function fcDraw(){const w=W[fcOrder[fcI]];$("#fc").classList.remove("flip");
+ $("#fcHan").textContent=w.h;$("#fcHan2").textContent=w.h;$("#fcPy").textContent=w.p;$("#fcVi").textContent=w.v;$("#fcPos").textContent=w.t;
+ $("#fcNum").textContent=(fcI+1)+" / "+W.length;
+ dots.innerHTML=fcOrder.map((k,j)=>`<i class="${fcSeen.has(k)?"seen":""} ${j===fcI?"cur":""}"></i>`).join("")}
+function fcFlip(){const f=$("#fc");f.classList.toggle("flip");if(f.classList.contains("flip")){fcSeen.add(fcOrder[fcI]);say(W[fcOrder[fcI]].h);fcDraw();f.classList.add("flip");if(fcSeen.size===W.length)award(0,"字")}}
+$("#fc").onclick=fcFlip;$("#fc").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fcFlip()}};
+$("#fcNext").onclick=()=>{fcI=(fcI+1)%W.length;fcDraw()};
+$("#fcPrev").onclick=()=>{fcI=(fcI-1+W.length)%W.length;fcDraw()};
+$("#fcShuf").onclick=()=>{fcOrder=shuffle(fcOrder);fcI=0;fcDraw()};
+$("#fcSay").onclick=()=>say(W[fcOrder[fcI]].h);
+fcDraw();
+
+/* sound fx */
+let actx=null,sndOn=store.get("snd",true);
+function beep(f,d=.12,type="sine",vol=.15,slide=0){if(!sndOn)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+ const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;if(slide)o.frequency.exponentialRampToValueAtTime(f*slide,actx.currentTime+d);
+ g.gain.setValueAtTime(vol,actx.currentTime);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+d);o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d)}catch(e){}}
+const fx={flip:()=>beep(520,.07,"triangle",.1),match:n=>{beep(660+n*60,.12,"triangle");setTimeout(()=>beep(880+n*60,.16,"triangle"),90)},
+ miss:()=>beep(200,.2,"sawtooth",.06,.6),win:()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.18,"triangle"),i*120)),bonk:()=>beep(300,.1,"square",.08,2)};
+
+/* confetti */
+function confetti(){const c=$("#confetti");if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+ const cs=getComputedStyle(document.documentElement),cols=["--seal","--jade","--gold"].map(v=>cs.getPropertyValue(v).trim());
+ const P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,r:Math.random()*6,s:4+Math.random()*6,c:cols[Math.random()*3|0],ch:Math.random()<.15}));
+ let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.r+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;
+  if(p.ch){x.font="20px serif";x.fillText("好",0,0)}else x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});if(++t<220)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
+
+/* 2 memory */
+const cfg={mode:"v",size:6,play:1};
+let memOpen=[],memLock=false,memFlips=0,memPairs=0,memCombo=0,memMaxCombo=0,memT=0,memTimer=null,memStarted=false,turn="red",tsc={red:0,blue:0},peekUsed=false;
+function seg(id,key,num){$$(`#${id} button`).forEach(b=>b.onclick=()=>{$$(`#${id} button`).forEach(x=>x.setAttribute("aria-pressed",x===b));cfg[key]=num?+b.dataset.v:b.dataset.v;memNew()})}
+seg("cfgMode","mode");seg("cfgSize","size",1);seg("cfgPlay","play",1);
+function face(w,side){if(cfg.mode==="h"||side===0)return `<span class="han">${w.h}</span>`;return cfg.mode==="p"?`<span class="pyc">${w.p}</span>`:w.v}
+function memNew(){clearInterval(memTimer);memStarted=false;memT=0;memOpen=[];memFlips=0;memPairs=0;memCombo=0;memMaxCombo=0;memLock=false;peekUsed=false;turn="red";tsc={red:0,blue:0};
+ const pick=shuffle(W).slice(0,cfg.size);
+ const cards=shuffle(pick.flatMap((w,i)=>[{id:i,w,side:0},{id:i,w,side:1}]));
+ const g=$("#mem");g.style.setProperty("--cols",cfg.size===10?5:4);
+ g.innerHTML=cards.map((c,k)=>`<button class="mc" data-id="${c.id}" data-say="${c.w.h}" aria-label="Thẻ ${k+1}"><span class="b">?</span><span class="f">${face(c.w,c.side)}</span></button>`).join("");
+ $$(".mc").forEach(b=>b.onclick=()=>memClick(b));
+ $("#memEnd").hidden=true;$("#teams").hidden=cfg.play!==2;$("#memPeek").disabled=false;$("#memCombo").hidden=true;memStat()}
+function memStat(){$("#memTime").textContent=memT;$("#memFlips").textContent=memFlips;$("#memPairs").textContent=memPairs+"/"+cfg.size;
+ $("#sRed").textContent=tsc.red;$("#sBlue").textContent=tsc.blue;$("#tRed").classList.toggle("turn",turn==="red");$("#tBlue").classList.toggle("turn",turn==="blue")}
+function memClick(b){if(memLock||b.classList.contains("open")||b.classList.contains("done"))return;
+ if(!memStarted){memStarted=true;memTimer=setInterval(()=>{memT++;$("#memTime").textContent=memT},1000)}
+ b.classList.add("open");fx.flip();memOpen.push(b);
+ if(memOpen.length===2){memFlips++;const [a,c]=memOpen;
+  if(a.dataset.id===c.dataset.id){memLock=true;setTimeout(()=>{
+    [a,c].forEach(x=>{x.classList.remove("open");x.classList.add("done");if(cfg.play===2&&turn==="red")x.classList.add("t-red")});
+    memOpen=[];memLock=false;memPairs++;memCombo++;memMaxCombo=Math.max(memMaxCombo,memCombo);fx.match(memCombo);say(a.dataset.say);
+    const pts=cfg.play===2?1:0;if(pts)tsc[turn]++;
+    if(memCombo>=2){const cb=$("#memCombo");cb.hidden=false;$("#memComboN").textContent=memCombo;cb.classList.remove("bump");void cb.offsetWidth;cb.classList.add("bump")}
+    memStat();if(memPairs===cfg.size)memWin()},420)}
+  else{memLock=true;memCombo=0;$("#memCombo").hidden=true;
+   setTimeout(()=>{a.classList.add("miss");c.classList.add("miss");fx.miss()},450);
+   setTimeout(()=>{a.classList.remove("open","miss");c.classList.remove("open","miss");memOpen=[];memLock=false;if(cfg.play===2){turn=turn==="red"?"blue":"red"};memStat()},1100)}
+  memStat()}}
+function memWin(){clearInterval(memTimer);fx.win();confetti();const end=$("#memEnd");end.hidden=false;
+ if(cfg.play===2){const w=tsc.red===tsc.blue?"Hòa nhau! 平局！":(tsc.red>tsc.blue?"Đội Đỏ thắng! 红队赢了！":"Đội Xanh thắng! 绿队赢了！");
+  end.innerHTML=`<div style="font-size:26px;font-weight:700">${w}</div><p class="hint">Đỏ ${tsc.red} : ${tsc.blue} Xanh · ${memT} giây</p>`}
+ else{const ratio=memFlips/cfg.size,st=ratio<=1.5?3:ratio<=2.2?2:1;const key=`mem-${cfg.mode}-${cfg.size}`,best=store.get(key,null),nb=best===null||memT<best;if(nb)store.set(key,memT);
+  end.innerHTML=`<div class="stars">${"★".repeat(st)}<span class="off">${"★".repeat(3-st)}</span></div>
+   <div style="font-size:22px;font-weight:700">${["","加油！Cố lên!","很好！Tốt lắm!","太棒了！Xuất sắc!"][st]}</div>
+   <p class="hint">${memT} giây · ${memFlips} lượt · combo cao nhất ×${memMaxCombo}${nb?" · Kỷ lục mới!":` · Kỷ lục: ${best}s`}</p>`}
+ setTimeout(()=>award(1,"配"),800)}
+$("#memPeek").onclick=()=>{if(peekUsed||memLock)return;peekUsed=true;$("#memPeek").disabled=true;memLock=true;
+ const hidden=$$(".mc").filter(b=>!b.classList.contains("done")&&!b.classList.contains("open"));hidden.forEach(b=>b.classList.add("open"));
+ setTimeout(()=>{hidden.forEach(b=>b.classList.remove("open"));memLock=false},1800)};
+function sndLabel(){$("#memSnd").textContent="🔔 Âm thanh: "+(sndOn?"bật":"tắt")}
+$("#memSnd").onclick=()=>{sndOn=!sndOn;store.set("snd",sndOn);sndLabel()};sndLabel();
+$("#memNew").onclick=memNew;memNew();
+
+/* 3 dialogue */
+const D=[
+ {w:"王一飞",l:"___，你叫什么名字？",a:"请问",o:["请问","认识","对不起","没事"],k:"Bài 1"},
+ {w:"王一飞",l:"请问，你叫___名字？",a:"什么",o:["什么","很","我","也"],k:"Bài 1"},
+ {w:"陈天中",l:"我___陈天中。",a:"叫",o:["叫","不","高兴","你"],k:"Bài 1"},
+ {w:"白家月",l:"你好，陈天中！我___是安妮，我是白家月。",a:"不",o:["不","也","很","叫"],k:"Bài 2"},
+ {w:"陈天中",l:"___！",a:"对不起",o:["对不起","没关系","名字","请问"],k:"Bài 2 · Trần Thiên Trung nhận nhầm người"},
+ {w:"白家月",l:"___！",a:"没关系",o:["没关系","对不起","什么","认识"],k:"Bài 2 · đáp lại lời xin lỗi"},
+ {w:"李文",l:"很高兴___你。",a:"认识",o:["认识","是","叫","名字"],k:"Bài 3"},
+ {w:"白家月",l:"认识你我___很高兴。",a:"也",o:["也","不","什么","没事"],k:"Bài 3"}
+];
+let dlgDone=0;
+function dlgBuild(){dlgDone=0;
+ $("#dlg").innerHTML=D.map((d,i)=>`<div class="line"><div class="who">${d.w.slice(-1)}</div><div class="bub"><div style="font-size:12px;color:var(--muted)"><span class="han">${d.w}</span> · ${d.k}</div>
+  <div class="say">${d.l.replace("___",`<span class="blank" id="b${i}">?</span>`)}</div>
+  <div class="opts">${shuffle(d.o).map(o=>`<button class="opt" data-i="${i}" data-o="${o}">${o}</button>`).join("")}</div></div></div>`).join("");
+ $$(".opt").forEach(b=>b.onclick=()=>{const d=D[b.dataset.i],box=b.parentElement;if(box.dataset.done)return;
+  if(b.dataset.o===d.a){b.classList.add("right");box.dataset.done=1;const bl=$("#b"+b.dataset.i);bl.textContent=d.a;bl.classList.add("ok");
+   say(d.l.replace("___",d.a));dlgDone++;dlgStat();if(dlgDone===D.length)award(2,"话")}
+  else{b.classList.add("wrong")}});
+ dlgStat()}
+function dlgStat(){$("#dlgStat").textContent=`Đúng: ${dlgDone}/${D.length}`}
+$("#dlgReset").onclick=dlgBuild;dlgBuild();
+
+/* 4 word order */
+const S=[
+ {t:["我","叫","李文","。"],v:"Tôi tên là Lý Văn."},
+ {t:["你","叫","什么","名字","？"],v:"Bạn tên là gì?"},
+ {t:["我","是","学生","。"],v:"Tôi là học sinh."},
+ {t:["我","不","是","安妮","。"],v:"Tôi không phải là Annie."},
+ {t:["很","高兴","认识","你","。"],v:"Rất vui được quen bạn."},
+ {t:["认识","你","我","也","很","高兴","。"],v:"Quen bạn tôi cũng rất vui."}
+];
+let oI=0,oPlaced=[];
+function ordDraw(){const s=S[oI];oPlaced=[];$("#ordVi").textContent="“"+s.v+"”";$("#ordStat").textContent=`Câu ${oI+1}/${S.length}`;
+ $("#ordSlot").className="slot";$("#ordSlot").innerHTML="";$("#ordNext").hidden=true;$("#ordCheck").hidden=false;$("#ordSay").hidden=!canSpeak;
+ let order;do{order=shuffle(s.t.map((_,i)=>i))}while(order.join()===s.t.map((_,i)=>i).join());
+ $("#ordTiles").innerHTML=order.map(i=>`<button class="tile" data-i="${i}">${s.t[i]}</button>`).join("");
+ $$("#ordTiles .tile").forEach(b=>b.onclick=()=>{if($("#ordSlot").classList.contains("ok"))return;b.hidden=true;oPlaced.push(+b.dataset.i);ordSlot()})}
+function ordSlot(){const s=S[oI];$("#ordSlot").classList.remove("bad");
+ $("#ordSlot").innerHTML=oPlaced.map((i,k)=>`<button class="tile" data-k="${k}">${s.t[i]}</button>`).join("");
+ $$("#ordSlot .tile").forEach(b=>b.onclick=()=>{if($("#ordSlot").classList.contains("ok"))return;const i=oPlaced.splice(+b.dataset.k,1)[0];$(`#ordTiles .tile[data-i="${i}"]`).hidden=false;ordSlot()})}
+$("#ordClear").onclick=()=>{if($("#ordSlot").classList.contains("ok"))return;oPlaced=[];$$("#ordTiles .tile").forEach(b=>b.hidden=false);ordSlot()};
+$("#ordCheck").onclick=()=>{const s=S[oI];if(oPlaced.length<s.t.length){toast("Hãy dùng hết các thẻ chữ nhé");return}
+ const got=oPlaced.map(i=>s.t[i]).join("");
+ if(got===s.t.join("")){$("#ordSlot").classList.add("ok");say(got);$("#ordCheck").hidden=true;
+  if(oI===S.length-1){toast("Xếp đúng cả 6 câu!");award(3,"序")}else $("#ordNext").hidden=false}
+ else{const sl=$("#ordSlot");sl.classList.remove("bad");void sl.offsetWidth;sl.classList.add("bad");toast("Chưa đúng, nhớ: Chủ ngữ → Vị ngữ → Tân ngữ")}};
+$("#ordNext").onclick=()=>{oI=(oI+1)%S.length;ordDraw()};
+$("#ordSay").onclick=()=>say(S[oI].t.join(""));
+ordDraw();
+
+/* 5 names */
+const N=[{n:"王一飞",p:"Wáng Yīfēi",vi:"Vương Nhất Phi"},{n:"陈天中",p:"Chén Tiānzhōng",vi:"Trần Thiên Trung"},{n:"白家月",p:"Bái Jiāyuè",vi:"Bạch Gia Nguyệt"},{n:"李文",p:"Lǐ Wén",vi:"Lý Văn"}];
+let nmDone=new Set();
+$("#names").innerHTML=shuffle(N.map((x,i)=>({...x,i}))).map(x=>`<div class="nm" data-i="${x.i}"><div class="chars">${[...x.n].map((c,k)=>`<button class="ch" data-k="${k}" aria-label="${c}">${c}</button>`).join("")}</div>
+ <div class="py">${x.p}</div><div class="res"></div></div>`).join("");
+$$(".nm").forEach(card=>{const x=N[card.dataset.i];
+ card.querySelectorAll(".ch").forEach(b=>b.onclick=()=>{if(nmDone.has(x.n))return;
+  if(b.dataset.k==="0"){card.querySelectorAll(".ch").forEach((c,k)=>c.classList.add(k?"ming":"xing"));
+   card.querySelector(".res").innerHTML=`<span style="color:var(--seal)">姓 ${x.n[0]}</span> · <span style="color:var(--jade)">名 ${x.n.slice(1)}</span><br><span style="color:var(--muted);font-weight:400">${x.vi}</span>`;
+   say(x.n);nmDone.add(x.n);if(nmDone.size===N.length)award(4,"姓")}
+  else{b.classList.remove("miss");void b.offsetWidth;b.classList.add("miss");card.querySelector(".res").textContent="Chưa đúng, họ đứng ở đâu?"}})});
+
+/* 6 lightning */
+let ltScore=0,ltTime=60,ltTimer=null,ltBest=store.get("best",0),ltBusy=false;
+$("#ltBest").textContent=ltBest;
+function ltQ(){const w=W[Math.random()*W.length|0];const type=Math.random()*3|0;
+ const others=shuffle(W.filter(x=>x!==w)).slice(0,3);const all=shuffle([w,...others]);
+ let ask,q,qVi=false,key,hanBtn=false;
+ if(type===0){ask="Chữ này nghĩa là gì?";q=w.h;key="v"}
+ else if(type===1){ask="Chữ Hán nào nghĩa là…";q=w.v;qVi=true;key="h";hanBtn=true}
+ else{ask="Đọc chữ này thế nào?";q=w.h;key="p"}
+ $("#ltAsk").textContent=ask;$("#ltQ").textContent=q;$("#ltQ").className="big"+(qVi?" vi":"");
+ $("#ltAns").innerHTML=all.map(x=>`<button class="${hanBtn?"han":""}" data-ok="${x===w?1:0}">${x[key]}</button>`).join("");
+ ltBusy=false;
+ $$("#ltAns button").forEach(b=>b.onclick=()=>{if(ltBusy)return;ltBusy=true;
+  if(b.dataset.ok==="1"){b.classList.add("right");ltScore++;$("#ltScore").textContent=ltScore}
+  else{b.classList.add("wrong");$('#ltAns button[data-ok="1"]').classList.add("right")}
+  setTimeout(()=>{if(ltTime>0)ltQ()},b.dataset.ok==="1"?350:900)})}
+function ltStart(){ltScore=0;ltTime=60;$("#ltScore").textContent=0;$("#ltTime").textContent=60;$("#ltBar").style.width="100%";
+ $("#ltIntro").hidden=true;$("#ltEnd").hidden=true;$("#ltGame").hidden=false;ltQ();clearInterval(ltTimer);
+ ltTimer=setInterval(()=>{ltTime--;$("#ltTime").textContent=ltTime;$("#ltBar").style.width=(ltTime/60*100)+"%";if(ltTime<=0)ltEnd()},1000)}
+function ltEnd(){clearInterval(ltTimer);$("#ltGame").hidden=true;$("#ltEnd").hidden=false;
+ const nb=ltScore>ltBest;if(nb){ltBest=ltScore;store.set("best",ltBest);$("#ltBest").textContent=ltBest}
+ $("#ltMsg").textContent=`${ltScore} điểm`+(nb?" · Kỷ lục mới!":"");
+ $("#ltMsg2").textContent=ltScore>=10?"加油成功！Bạn đã nhận dấu “快”.":`Cần 10 điểm để nhận dấu, còn thiếu ${10-ltScore} điểm. 加油！`;
+ if(ltScore>=10)award(5,"快")}
+$("#ltStart").onclick=ltStart;$("#ltAgain").onclick=ltStart;
+
+
+/* bonus whack */
+let wkMode="read",wkTarget=null,wkScore=0,wkTime=45,wkTimer=null,wkLoop=null,wkBest=store.get("wkbest",0),wkOn=false;
+$("#wkBest").textContent=wkBest;
+$("#field").innerHTML=Array.from({length:9},(_,i)=>`<div class="hole"><button class="mole" data-i="${i}" tabindex="-1"></button></div>`).join("");
+$$("#wkMode button").forEach(b=>b.onclick=()=>{$$("#wkMode button").forEach(x=>x.setAttribute("aria-pressed",x===b));wkMode=b.dataset.v});
+function wkNewTarget(){wkTarget=W[Math.random()*W.length|0];
+ if(wkMode==="read"){$("#wkAsk").textContent="Đập vào chữ có nghĩa:";$("#wkTgt").textContent=wkTarget.v}
+ else{$("#wkAsk").textContent="Đập vào chữ bạn vừa nghe";$("#wkTgt").innerHTML='<button class="speak" id="wkRep">🔊 Nghe lại</button>';$("#wkRep").onclick=()=>say(wkTarget.h);say(wkTarget.h)}}
+function wkPop(){if(!wkOn)return;const moles=$$(".mole").filter(m=>!m.classList.contains("up"));if(!moles.length)return;
+ const m=moles[Math.random()*moles.length|0];const w=Math.random()<.4?wkTarget:W[Math.random()*W.length|0];
+ m.textContent=w.h;m.dataset.h=w.h;m.className="mole up";m.tabIndex=0;
+ const stay=Math.max(700,1700-(45-wkTime)*22);clearTimeout(m._t);m._t=setTimeout(()=>{m.classList.remove("up");m.tabIndex=-1},stay)}
+$$(".mole").forEach(m=>m.onclick=()=>{if(!wkOn||!m.classList.contains("up")||m.classList.contains("hit")||m.classList.contains("bad"))return;
+ clearTimeout(m._t);
+ if(m.dataset.h===wkTarget.h){m.classList.add("hit");wkScore++;fx.bonk();fx.match(1);setTimeout(wkNewTarget,250)}
+ else{m.classList.add("bad");wkScore=Math.max(0,wkScore-1);fx.miss()}
+ $("#wkScore").textContent=wkScore;setTimeout(()=>{m.className="mole";m.tabIndex=-1},350)});
+function wkStart(){wkScore=0;wkTime=45;wkOn=true;$("#wkScore").textContent=0;$("#wkTime").textContent=45;$("#wkStart").disabled=true;wkNewTarget();
+ clearInterval(wkTimer);clearInterval(wkLoop);
+ wkTimer=setInterval(()=>{wkTime--;$("#wkTime").textContent=wkTime;if(wkTime<=0)wkEnd()},1000);
+ const tick=()=>{if(!wkOn)return;wkPop();if(Math.random()<.5)wkPop();wkLoop=setTimeout(tick,Math.max(450,950-(45-wkTime)*12))};tick()}
+function wkEnd(){wkOn=false;clearInterval(wkTimer);clearTimeout(wkLoop);$$(".mole").forEach(m=>{m.className="mole";m.tabIndex=-1});$("#wkStart").disabled=false;$("#wkStart").textContent="Chơi lại";
+ const nb=wkScore>wkBest;if(nb){wkBest=wkScore;store.set("wkbest",wkBest);$("#wkBest").textContent=wkBest}
+ $("#wkAsk").textContent=nb?"Kỷ lục mới! 新纪录！":"Hết giờ! 时间到！";$("#wkTgt").textContent=wkScore+" điểm";fx.win();if(wkScore>=8)confetti()}
+$("#wkStart").onclick=wkStart;
+window.__wkStop=()=>{if(wkOn)wkEnd()};
+
+/* twister */
+const TW=[["七","qī"],["加","jiā"],["一","yī"],["，",""],["再","zài"],["减","jiǎn"],["一","yī"],["，",""],["加","jiā"],["完","wán"],["减","jiǎn"],["完","wán"],["等","děng"],["于","yú"],["几","jǐ"],["？",""],["加","jiā"],["完","wán"],["减","jiǎn"],["完","wán"],["还","hái"],["是","shì"],["七","qī"],["。",""]];
+$("#tw").innerHTML=TW.map(([c,p])=>`<ruby class="${"七加减".includes(c)?"hl":""}">${c}<rt>${p}</rt></ruby>`).join("");
+const twText=TW.map(x=>x[0]).join("");
+$("#twSay").onclick=()=>say(twText,.6);$("#twFast").onclick=()=>say(twText,1.15);
+</script>
+
+</body></html>
